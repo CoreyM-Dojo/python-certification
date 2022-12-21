@@ -1,5 +1,5 @@
 from data.players import players
-from data.kevin import kevin, jason, kyrie
+from data.objects import kevin, jason, kyrie
 
 
 class Player:
