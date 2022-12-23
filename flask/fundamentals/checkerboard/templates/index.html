@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Checkerboard</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/style.css') }}"
+        />
+        <style>
+            .container {
+                width: {{((col*2) * 30)|string() + "px"}};
+                display: flex;
+                flex-wrap: wrap;
+                align-content: center;
+            }
+
+            .box1 {
+                background-color: {{color1}};
+            }
+            .box2 {
+                background-color: {{color2}};
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            {% for i in range(row): %} {% for j in range(col)%}
+            <div>
+                <div class="box1"></div>
+                <div class="box2"></div>
+            </div>
+            <div>
+                <div class="box2"></div>
+                <div class="box1"></div>
+            </div>
+            {% endfor %} {% endfor %}
+        </div>
+    </body>
+</html>
