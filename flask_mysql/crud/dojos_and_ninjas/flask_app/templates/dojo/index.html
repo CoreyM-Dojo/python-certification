@@ -1,0 +1,24 @@
+{% extends "form.html" %} {% block content %}
+<h1>Add a dojo</h1>
+<input type="hidden" name="which_form" value="dojo" />
+<div class="form-group mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input name="name" type="text" class="form-control" />
+</div>
+<div class="form-group">
+    <input type="submit" value="Create" class="btn btn-primary" />
+</div>
+{% endblock %} {% block list %}
+<div
+    class="navbar-nav p-5 d-flex flex-column align-items-center justify-content-around bg-dark text-light text-center"
+>
+    <h2><u>All Dojos</u></h2>
+    {% for dojo in all_dojos %}
+    <div class="border border-light h-50 p-3 d-flex bg-success gap-3 m-2">
+        <a href="/dojos/{{dojo.id}}" class="nav-item nav-link">{{dojo.name}}</a>
+        <a class="btn btn-warning" href="/dojos/update/{{dojo.id}}">edit</a>
+        <a href="/dojos/delete/{{dojo.id}}" class="btn btn-danger">Delete</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

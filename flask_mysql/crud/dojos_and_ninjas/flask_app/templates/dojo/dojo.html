@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        {{ bootstrap.load_css()}} {% from 'bootstrap4/nav.html' import
+        render_nav_item %}
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-2">
+            <div class="navbar-brand">Picture</div>
+            <div class="navbar-nav mr-auto">
+                {{ render_nav_item('home', 'Home') }} {{
+                render_nav_item('add_ninja', 'Add a ninja') }}
+            </div>
+        </nav>
+        <h1>{{dojo.name}} Ninjas</h1>
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Age</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ninja in dojo.ninjas %}
+                <tr>
+                    <td>{{ninja.id}}</td>
+                    <td>{{ninja.first_name}}</td>
+                    <td>{{ninja.last_name}}</td>
+                    <td>{{ninja.age}}</td>
+                    <td>
+                        <a
+                            href="/ninjas/update/{{ninja.id}}"
+                            class="btn btn-warning"
+                            >Edit</a
+                        >
+                        <a
+                            href="/ninjas/delete/{{ninja.id}}"
+                            class="btn btn-danger"
+                            >Delete</a
+                        >
+                    </td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    </body>
+</html>

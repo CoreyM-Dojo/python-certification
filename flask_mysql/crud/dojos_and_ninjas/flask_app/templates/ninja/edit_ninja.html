@@ -1,0 +1,39 @@
+{% extends "form.html" %} {% block content %}
+
+<h1>Update {{ ninja.first_name + " " + ninja.last_name}}</h1>
+<input type="hidden" name="which_form" value="edit_ninja" />
+<input type="hidden" name="id" value="{{ninja.id}}" />
+<div class="form-group">
+    <input type="hidden" name="dojo_id" value="{{ninja.dojo_id}}" />
+</div>
+<div class="form-group">
+    <label for="first_name" class="form-label">First Name</label>
+    <input
+        value="{{ninja.first_name}}"
+        name="first_name"
+        type="text"
+        class="form-control"
+    />
+</div>
+<div class="form-group">
+    <label for="last_name" class="form-label">Last Name</label>
+    <input
+        value="{{ninja.last_name}}"
+        name="last_name"
+        type="text"
+        class="form-control"
+    />
+</div>
+<div class="form-group">
+    <label for="age" class="form-label">Age</label>
+    <input
+        value="{{ninja.age}}"
+        name="age"
+        type="number"
+        class="form-control"
+    />
+</div>
+<div class="form-group">
+    <button class="btn btn-primary">Update</button>
+</div>
+{% endblock %}
