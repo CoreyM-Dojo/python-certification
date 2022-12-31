@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% block body%}
+<div class="container">
+    <h2>{{book.title}}'s favorites</h2>
+    <div class="d-flex justify-content-around">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for author in book.authors %}
+                <tr>
+                    <td>{{author.id}}</td>
+                    <td>{{author.name}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="card" style="width: 18rem">
+            <div class="card-body">
+                <h5 class="card-title">{{ book.title }}</h5>
+                <p class="card-text">
+                    Some quick example text to build on the card title and make
+                    up the bulk of the card's content.
+                </p>
+            </div>
+        </div>
+    </div>
+    <h2>Add to Favorites:</h2>
+    <form
+        class="d-flex col-md-2 gap-2 p-3 bg-dark text-light"
+        action="/books/add"
+        method="POST"
+    >
+        <input value="{{book.id}}" type="hidden" name="book_id" />
+        <select class="input-control" name="author_id">
+            {% for author in all_authors: %}
+            <option value="{{author.id}}">{{author.name}}</option>
+            {% endfor %}
+        </select>
+        <div class="form-group">
+            <button class="btn btn-success">Add</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
