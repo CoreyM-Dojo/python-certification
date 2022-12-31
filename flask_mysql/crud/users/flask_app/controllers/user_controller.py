@@ -1,5 +1,5 @@
 from flask_app import app
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, session
 from flask_app.models.user import User
 
 
@@ -30,8 +30,14 @@ def get_user(id):
 @app.route("/process", methods=["POST"])
 def process():
     if request.form["which_form"] == "create":
-        created_user_id = User.create(request.form)
-        return redirect("/users/" + str(created_user_id))
+        if not User.validate_user(request.form):
+            session["first_name"] = request.form["first_name"]
+            session["last_name"] = request.form["last_name"]
+            session["email"] = request.form["email"]
+            return redirect("/users/create")
+        else:
+            created_user_id = User.create(request.form)
+            return redirect("/users/" + str(created_user_id))
     elif request.form["which_form"] == "update":
         print(request.form)
         # data = {
