@@ -1,0 +1,52 @@
+{% extends "base.html" %} {% block body %}
+<div class="container p-3">
+    <form
+        action="/process"
+        class="col-md-5 mx-auto d-flex flex-column gap-3 p-3 bg-dark text-light"
+        method="POST"
+    >
+        {% with messages = get_flashed_messages() %}
+        <!-- declare a variable called messages -->
+        {% if messages %}
+        <!-- check if there are any messages -->
+        {% for message in messages %}
+        <!-- loop through the messages -->
+        <p class="text-danger">{{message}}</p>
+        <!-- display each message in a paragraph tag -->
+        {% endfor %} {% endif %} {% endwith %}
+        <input type="hidden" name="which_form" value="update" />
+        <input type="hidden" name="id" value="{{order.id}}" />
+        <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input
+                value="{{order.name}}"
+                name="name"
+                type="text"
+                class="form-control"
+            />
+        </div>
+        <div class="form-group">
+            <label for="cookie_type" class="form-label">Cookie Type</label>
+            <input
+                value="{{order.cookie_type}}"
+                name="cookie_type"
+                type="text"
+                class="form-control"
+            />
+        </div>
+        <div class="form-group">
+            <label for="num_of_boxes" class="form-label">Boxes</label>
+            <input
+                value="{{order.num_of_boxes}}"
+                name="num_of_boxes"
+                type="number"
+                class="form-control"
+                value="1"
+            />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">Update</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
