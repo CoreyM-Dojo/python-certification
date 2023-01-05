@@ -4,21 +4,20 @@ from flask_bcrypt import Bcrypt
 from flask_app.models import queries
 from flask import flash
 import re
-
 bcrypt = Bcrypt(app)
-db = "auth"
+db = "recipes"
 table = "users"
-REGEX = re.compile(r"^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$")
-PASSWORD_REGEX = re.compile(r"^(?=.{8,}$)(?=.*?[A-Z])(?=.*?[0-9])")
-
+REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+PASSWORD_REGEX = re.compile(r'^(?=.{8,}$)(?=.*?[A-Z])(?=.*?[0-9])')
 
 class User:
     def __init__(self, data):
-        self.id = data["id"]
-        self.first_name = data["first_name"]
-        self.last_name = data["last_name"]
-        self.email = data["email"]
-        self.password = data["password"]
+        self.id=data["id"]
+        self.first_name=data["first_name"]
+        self.last_name=data["last_name"]
+        self.email=data["email"]
+        self.password=data["password"]
+        self.recipes = []
 
     @classmethod
     def save(cls, data):
@@ -29,14 +28,13 @@ class User:
 
     @classmethod
     def get_by_id(cls, id):
-        data = {"id": id}
-        query = queries.get_by(table, "id")
-        return cls(connectToMySQL(db).query_db(query, data)[0])
-
+        data ={"id":id}
+        query=queries.get_by(table, "id")
+        return connectToMySQL(db).query_db(query, data)[0]
     @classmethod
     def get_by_email(cls, email):
-        data = {"email": email}
-        query = queries.get_by(table, "email")
+        data ={"email":email}
+        query=queries.get_by(table,"email")
         results = connectToMySQL(db).query_db(query, data)
         if len(results) < 1:
             return False
@@ -44,31 +42,31 @@ class User:
 
     @staticmethod
     def validate_user(user):
-        is_valid = True
+        is_valid=True
         if len(user["first_name"]) < 2:
             flash("First name must have at least 2 characters", "register")
-            is_valid = False
+            is_valid=False
         if len(user["last_name"]) < 2:
             flash("Last name must have at least 2 characters", "register")
-            is_valid = False
+            is_valid=False
         if len(user["email"]) < 2:
             flash("Email must have at least 2 characters", "register")
-            is_valid = False
+            is_valid=False
         if not REGEX.match(user["email"]):
             flash("Invalid email format", "register")
-            is_valid = False
+            is_valid=False
         if User.get_by_email(user["email"]) != False:
             flash("Email is already taken", "register")
             is_valid = False
         if len(user["password"]) < 8:
             flash("Password must have at least 8 characters", "register")
-            is_valid = False
-        if not PASSWORD_REGEX.match(user["password"]):
-            flash("Password must contain 1 capital letter and one number", "register")
-            is_valid = False
+            is_valid=False
+        # if not PASSWORD_REGEX.match(user["password"]):
+        #     flash("Password must contain 1 capital letter and one number", "register")
+        #     is_valid=False
         if user["password"] != user["confirm"]:
             flash("Passwords must match", "register")
-            is_valid = False
+            is_valid=False
         return is_valid
 
     @staticmethod
@@ -81,3 +79,9 @@ class User:
             flash("Invalid login attempt", "login")
             return False
         return True
+        
+
+
+        
+        
+        

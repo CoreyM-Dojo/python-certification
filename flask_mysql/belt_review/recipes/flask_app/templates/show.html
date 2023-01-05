@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block body %}
+<div class="container">
+    <div class="p-3 d-flex justify-content-between">
+        <h1>{{recipe.name}}</h1>
+        <span>Posted By: {{recipe.creator.first_name}}</span>
+    </div>
+    <div class="d-flex flex-column gap-3 p-5 border border-dark">
+        <p>Description: {{recipe.description}}</p>
+        <p>Under 30 minutes?: {{ "Yes" if recipe.under_30 else "No"}}</p>
+        <p>Instructions: {{recipe.instructions}}</p>
+        <p>Date Made: {{recipe.made_in.strftime("%B %d, %Y")}}</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "base.html" %} {% block body %}
+<div class="container p-3">
+    <form
+        action="/recipes/edit/{{recipe.id}}"
+        class="p-3 bg-dark text-light col-md-6 mx-auto"
+        method="POST"
+    >
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <div class="alert alert-danger p-3">
+            {% for message in messages %}
+            <p>{{message}}</p>
+            {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
+        <input type="hidden" name="users_id" value="{{logged_in.id}}" />
+        <input type="hidden" name="which_form" value="update" />
+        <h1>Create a recipe!</h1>
+        <div class="d-flex p-2 gap-2 mx-auto justify-content-around">
+            <div>
+                <div class="form-group">
+                    <label for="name" class="form-label">Name</label>
+                    <input
+                        name="name"
+                        value="{{recipe.name}}"
+                        type="text"
+                        class="form-control"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="description" class="form-label"
+                        >Description</label
+                    >
+                    <textarea
+                        name="description"
+                        cols="30"
+                        rows="6"
+                        class="form-control"
+                        value="{{recipe.description}}"
+                    >
+{{recipe.description}}</textarea
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="instructions" class="form-label"
+                        >Instructions</label
+                    >
+                    <textarea
+                        name="instructions"
+                        cols="30"
+                        rows="6"
+                        class="form-control"
+                        value="{{recipe.instructions}}"
+                    >
+{{recipe.instructions}}</textarea
+                    >
+                </div>
+            </div>
+            <div>
+                <div class="form-group">
+                    <label for="made_in" class="form-label">Made</label>
+                    <input
+                        type="date"
+                        name="made_in"
+                        placeholder="{{recipe.made_in}}"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="under_30" class="form-label"
+                        >Under 30 minutes?</label
+                    >
+                    {% if recipe.under_30%}
+                    <input
+                        class="m-2"
+                        type="radio"
+                        name="under_30"
+                        value="Yes"
+                        checked="checked"
+                    />Yes
+                    <input
+                        class="m-2"
+                        type="radio"
+                        name="under_30"
+                        value="No"
+                    />No
+                </div>
+                {% else %}
+                <input
+                    class="m-2"
+                    type="radio"
+                    name="under_30"
+                    value="Yes"
+                />Yes
+                <input
+                    class="m-2"
+                    type="radio"
+                    name="under_30"
+                    value="No"
+                    checked="checked"
+                />No {% endif %}
+                <div class="form-group text-end">
+                    <button class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
