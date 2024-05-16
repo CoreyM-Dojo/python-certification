@@ -18,17 +18,19 @@ class Message:
         query = "SELECT * FROM messages LEFT JOIN rides ON rides.id = messages.rides_id JOIN users ON users.id = messages.users_id  WHERE rides.id = %(ride_id)s ORDER BY rides.created_at ASC;"
         results = connectToMySQL(db).query_db(query, data)
         all_messages = []
-        for row in results:
-            message = cls(row)
 
-            sender_data = {
-                "id": row["users.id"],
-                "first_name": row["first_name"],
-                "last_name" : row["last_name"],
-                "email": row["email"],
-                "password": row["password"]
-            }
-            message.sender = user.User(sender_data)
-            all_messages.append(message)
+        if (results):
+            for row in results:
+                message = cls(row)
+
+                sender_data = {
+                    "id": row["users.id"],
+                    "first_name": row["first_name"],
+                    "last_name" : row["last_name"],
+                    "email": row["email"],
+                    "password": row["password"]
+                }
+                message.sender = user.User(sender_data)
+                all_messages.append(message)
         return all_messages
 
